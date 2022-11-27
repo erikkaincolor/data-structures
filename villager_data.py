@@ -1,8 +1,8 @@
 """Functions to parse a file containing villager data."""
 
-#https://fellowship.hackbrightacademy.com/materials/wmt5/exercises/data-structures/
-#https://fellowship.hackbrightacademy.com/materials/wmt5/lectures/lists-2/
-#command cheatsheet link:
+
+
+#once i figure out how to pass villagers.csv as an arg on the CL, then i can test whether these functions work or not
 
 def all_species(filename):
     """Return a set of unique species in the given file.
@@ -13,12 +13,33 @@ def all_species(filename):
     Return:
         - set[str]: a set of strings
     """
+    file_strings=open(filename, "r") #create file object, open it
+    empty_set = set() #init an empty set
+    for lines in file_strings:
+        split_string_into_list= lines.rstrip().split("|")    #strip whitespace in string + split each line in file of strings into sep. list items by the "|" + 
+        second_item=split_string_into_list[1]               #i want to do something to the second item in the list.
+        empty_set.add(second_item)                  #using .add set method to add to empty set
+    return (empty_set)
 
-    species = set()
+#when interactively calling function, use "" around filename!!!!!
+#>>> all_species("villagers.csv")
 
-    # TODO: replace this with your code
 
-    return species
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def get_villagers_by_species(filename, search_string="All"):
@@ -30,13 +51,45 @@ def get_villagers_by_species(filename, search_string="All"):
 
     Return:
         - list[str]: a list of names
+
+    species=[1]
+    vil_name=[0]
     """
 
     villagers = []
 
-    # TODO: replace this with your code
+    file_name=open(filename, "r") #create file object, open it
+
+    for lines in file_name: #for each line in 
+        profile=lines.rstrip().split("|") #get rid of whitespace, and put into list of strings by "|"
+        #same as name, species = line.rstrip().split("|")[:2]
+        #2nd indice not included
+        if search_string in lines:
+            villagers.append(profile[0]) #add first item in former list to new list
 
     return sorted(villagers)
+#>>> get_villagers_by_species("villagers.csv", search_string="Bear")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 def all_names_by_hobby(filename):
@@ -48,10 +101,36 @@ def all_names_by_hobby(filename):
     Return:
         - list[list[str]]: a list of lists containing names
     """
-
-    # TODO: replace this with your code
-
-    return []
+    file = open(filename, "r") #create file object, open it
+    #open file
+    #make object a list by stripping whitesoace and splitting byy delimiter into list
+    #if new_list[3] = "Education", append name to Education list....names are first thing in list
+    result = []
+    education = []
+    fashion = []
+    fitness = []
+    nature = []
+    play = []
+    music = []
+    
+    for lines in file:
+        new_line = lines.rstrip().split("|")
+        
+        if "Education" in new_line[3]:
+            education.append(new_line[0])
+        if "Fashion" in new_line[3]:
+            fashion.append(new_line[0])
+        if "Fitness" in new_line[3]:
+            fitness.append(new_line[0])
+        if "Nature" in new_line[3]:
+            nature.append(new_line[0])
+        if "Play" in new_line[3]:
+            play.append(new_line[0])
+        if "Music" in new_line[3]:
+            music.append(new_line[0])
+        
+    result = [sorted(education), sorted(fashion), sorted(fitness), sorted(nature), sorted(play), sorted(music)]
+    return [result]
 
 
 def all_data(filename):
@@ -66,10 +145,10 @@ def all_data(filename):
     Return:
         - list[tuple[str]]: a list of tuples containing strings
     """
-
-    all_data = []
-
-    # TODO: replace this with your code
+    all_data=[]
+    file=open(filename)
+    for lines in file:
+        all_data.append(tuple(lines.rstrip().split("|"))) #add onto the empty list the tupled lines
 
     return all_data
 
@@ -87,8 +166,15 @@ def find_motto(filename, villager_name):
     Return:
         - str: the villager's motto or None
     """
-
-    # TODO: replace this with your code
+    file = open(filename)
+    for line in file:
+        line.rstrip().split("|") #list of items
+        if villager_name == line[0]:
+            print(line[4])
+        else:
+            return None
+    
+    
 
 
 def find_likeminded_villagers(filename, villager_name):
