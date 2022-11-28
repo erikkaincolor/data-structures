@@ -130,7 +130,7 @@ def all_names_by_hobby(filename):
             music.append(new_line[0])
         
     result = [sorted(education), sorted(fashion), sorted(fitness), sorted(nature), sorted(play), sorted(music)]
-    return [result]
+    return result
 
 
 def all_data(filename):
@@ -148,29 +148,29 @@ def all_data(filename):
     all_data=[]
     file=open(filename)
     for lines in file:
-        all_data.append(tuple(lines.rstrip().split("|"))) #add onto the empty list the tupled lines
+        all_data.append(tuple(lines.rstrip().split("|"))) #add onto the empty list the tupled stings(aka each line)
 
     return all_data
 
 
 def find_motto(filename, villager_name):
     """Return the villager's motto.
-
     Return None if you're not able to find a villager with the
     given name.
-
     Arguments:
         - filename (str): the path to a data file
         - villager_name (str): a villager's name
-
     Return:
         - str: the villager's motto or None
     """
-    file = open(filename)
-    for line in file:
-        line.rstrip().split("|") #list of items
-        if villager_name == line[0]:
-            print(line[4])
+    file = open(filename, "r") #<-----now a file object that i opened
+    container = []
+    for line in file: #for each line in list
+        the_list=line.rstrip().split("|") #list of items
+        if villager_name == the_list[0]:
+            container.append(the_list[4])
+            print_this=" ".join(container) #had to google this but this is how you go from list to string
+            return print_this
         else:
             return None
     
@@ -179,17 +179,23 @@ def find_motto(filename, villager_name):
 
 def find_likeminded_villagers(filename, villager_name):
     """Return a set of villagers with the same personality as the given villager.
-
-    Arguments:
-        - filename (str): the path to a data file
-        - villager_name (str): a villager's name
-    
     Return:
         - set[str]: a set of names
-
     For example:
         >>> find_likeminded_villagers('villagers.csv', 'Wendy')
         {'Bella', ..., 'Carmen'}
     """
+    file = open(filename)
+    #if list items 3rd indice == villagers_names indice3...return set() of name!
+    result = set() #empty set
+    for line in file:
+        profiles=line.rstrip().split("|") #make those lines some lists
+    if villager_name in profiles: #if cyrano is in any list
+        villager_persona = profiles[2]
+        # if profiles[0] == villager_persona: #if name == vilagers name, check for just one person
+    if villager_persona in profiles:
+        result.add(profiles[0]) #add names to set
+        return result
+    else:
+        return None
 
-    # TODO: replace this with your code
